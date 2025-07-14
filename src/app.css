@@ -41,7 +41,7 @@
 
   textarea {
     resize: none;
-    @apply block w-full border border-slate-400 bg-white rounded h-[20rem];
+    @apply block w-full border border-slate-400 bg-white rounded h-[20rem] p-1;
   }
 
   h1,
@@ -67,5 +67,9 @@
 
   h4 {
     @apply text-lg;
+  }
+
+  button {
+    @apply text-white bg-mnlila any-hover:bg-mnlila/80 transition-colors rounded px-2 py-1 cursor-pointer;
   }
 }
