@@ -10,13 +10,13 @@
   <h2 id="md-to-html" class="text-center my-8">Markdown to HTML</h2>
   <div class="flex flex-col gap-3">
     <div class="flex flex-col items-center gap-2">
-      <label for="input" class="text-xl font-serif">Markdown</label>
-      <textarea id="input" bind:value={markdownText}></textarea>
+      <label for="input-mtoh" class="text-xl font-serif">Markdown</label>
+      <textarea id="input-mtoh" bind:value={markdownText}></textarea>
     </div>
     <p class="self-center text-xl">↓↓↓</p>
     <div class="flex flex-col items-center gap-2">
-      <label for="output" class="text-xl font-serif">Parsed HTML</label>
-      <textarea id="output" readonly>{parsedHtml}</textarea>
+      <label for="output-mtoh" class="text-xl font-serif">Parsed HTML</label>
+      <textarea id="output-mtoh" readonly>{parsedHtml}</textarea>
       <button
         class="my-5 btn-theme-1"
         type="button"
