@@ -7,24 +7,31 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
+    "start": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
   },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
-    "@tailwindcss/vite": "^4.1.11",
-    "@tsconfig/svelte": "^5.0.4",
-    "@types/turndown": "^5.0.5",
-    "svelte": "^5.28.1",
-    "svelte-check": "^4.1.6",
-    "tailwindcss": "^4.1.11",
-    "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+  "engines": {
+    "node": ">=22.0.0"
   },
-  "dependencies": {
-    "@joplin/turndown": "^4.0.80",
-    "@joplin/turndown-plugin-gfm": "^1.0.62",
-    "marked": "^16.0.0"
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.1.4",
+    "@tailwindcss/vite": "^4.1.12",
+    "@tsconfig/svelte": "^5.0.5",
+    "npm-check-updates": "^18.0.3",
+    "rehype-parse": "^9.0.1",
+    "rehype-remark": "^10.0.1",
+    "rehype-sanitize": "^6.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "remark-stringify": "^11.0.0",
+    "svelte": "^5.38.6",
+    "svelte-check": "^4.3.1",
+    "tailwindcss": "^4.1.12",
+    "typescript": "~5.9.2",
+    "unified": "^11.0.5",
+    "vite": "^7.1.4"
   },
   "volta": {
     "node": "22.17.1"
