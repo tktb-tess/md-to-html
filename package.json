@@ -14,10 +14,11 @@
     "node": ">=22.0.0"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^6.1.4",
-    "@tailwindcss/vite": "^4.1.12",
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.13",
     "@tsconfig/svelte": "^5.0.5",
-    "npm-check-updates": "^18.0.3",
+    "npm-check-updates": "^18.3.0",
     "rehype-parse": "^9.0.1",
     "rehype-remark": "^10.0.1",
     "rehype-sanitize": "^6.0.0",
@@ -26,12 +27,12 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-stringify": "^11.0.0",
-    "svelte": "^5.38.6",
-    "svelte-check": "^4.3.1",
-    "tailwindcss": "^4.1.12",
+    "svelte": "^5.39.6",
+    "svelte-check": "^4.3.2",
+    "tailwindcss": "^4.1.13",
     "typescript": "~5.9.2",
     "unified": "^11.0.5",
-    "vite": "^7.1.4"
+    "vite": "^7.1.7"
   },
   "volta": {
     "node": "22.17.1"

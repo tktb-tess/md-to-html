@@ -5,7 +5,12 @@
 </script>
 
 <Toast />
-<main class="mx-4 flex flex-col bg-slate-50">
+<main class="">
+  <h1 class="text-4xl lg:text-5xl font-extralight text-center my-12">HTML ↔ Markdown</h1>
+  <div class="flex justify-center">
+    <a href="../" class="btn-theme-1 font-normal">戻る</a>
+  </div>
   <MdToHtml />
   <HtmlToMd />
 </main>
+<div class="h-30"></div>

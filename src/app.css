@@ -1,7 +1,8 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 @theme {
-  --font-sans: 'Inter', 'Noto Sans JP', sans-serif, system-ui;
+  --font-sans: 'Inter-Variable', 'Noto Sans JP', sans-serif, system-ui;
   --font-serif: 'Charis SIL', 'Noto Serif JP', serif, system-ui;
   --color-mnlila: oklch(0.18 0.0957 296);
   --color-llila: oklch(0.91 0.0488 296);
@@ -18,7 +19,7 @@
 }
 
 @utility btn-theme-1 {
-  @apply text-white bg-mnlila any-hover:bg-mnlila/80 transition-colors rounded px-2 py-1;
+  @apply text-white bg-slate-800 any-hover:bg-slate-800/80 transition-colors rounded px-2;
 }
 
 @layer base {
@@ -29,11 +30,14 @@
   html,
   :host {
     -webkit-tap-highlight-color: revert;
-    @apply bg-slate-50;
   }
 
-  a {
-    @apply any-hover:underline text-link;
+  body {
+    @apply bg-slate-50 dark:bg-slate-950;
+  }
+
+  :where(main) {
+    @apply prose w-full max-w-320 mx-auto px-4;
   }
 
   textarea,
@@ -46,31 +50,6 @@
   textarea {
     resize: none;
     @apply block w-full border border-slate-400 bg-white rounded h-[20rem] p-1;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif text-mnlila;
-  }
-
-  h1 {
-    @apply text-2xl md:text-3xl xl:text-4xl;
-  }
-
-  h2 {
-    @apply text-2xl md:text-3xl border-b-3 border-double ps-1;
-  }
-
-  h3 {
-    @apply text-2xl;
-  }
-
-  h4 {
-    @apply text-lg;
   }
 
   button {

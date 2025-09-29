@@ -11,16 +11,16 @@
 </script>
 
 <section aria-labelledby="html-to-md">
-  <h2 id="html-to-md" class="text-center my-8">HTML to Markdown</h2>
+  <h2 id="html-to-md" class="text-center my-12 text-3xl">–HTML to Markdown–</h2>
   <div class="flex flex-col gap-3">
     <div class="flex flex-col items-center gap-2">
-      <label for="input-htom" class="text-xl font-serif">HTML</label>
+      <label for="input-htom" class="text-xl">HTML</label>
       <textarea id="input-htom" bind:value={htmlText}></textarea>
     </div>
     <p class="self-center text-xl">↓↓↓</p>
     {#await promise then parsedMarkdown}
       <div class="flex flex-col items-center gap-2">
-        <label for="output-htom" class="text-xl font-serif">
+        <label for="output-htom" class="text-xl">
           Parsed Markdown
         </label>
         <textarea id="output-htom" value={parsedMarkdown} readonly></textarea>
