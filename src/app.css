@@ -1,13 +1,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-@theme {
+@theme inline {
   --font-sans: 'Inter-Variable', 'Noto Sans JP', sans-serif, system-ui;
-  --font-serif: 'Charis SIL', 'Noto Serif JP', serif, system-ui;
-  --color-mnlila: oklch(0.18 0.0957 296);
-  --color-llila: oklch(0.91 0.0488 296);
-  --color-llila-2: oklch(0.85 0.0836 296);
-  --color-link: var(--color-blue-700);
 }
 
 @custom-variant any-hover {
@@ -19,7 +14,7 @@
 }
 
 @utility btn-theme-1 {
-  @apply text-white bg-slate-800 any-hover:bg-slate-800/80 transition-colors rounded px-2;
+  @apply text-white dark:text-black bg-slate-800 dark:bg-white any-hover:opacity-75 transition-colors rounded px-2;
 }
 
 @layer base {
@@ -37,7 +32,7 @@
   }
 
   :where(main) {
-    @apply prose w-full max-w-320 mx-auto px-4;
+    @apply prose dark:prose-invert prose-slate w-full max-w-320 mx-auto px-4;
   }
 
   textarea,
