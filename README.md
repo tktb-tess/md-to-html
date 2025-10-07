@@ -1,3 +1,3 @@
-# Markdown to HTML
+# Markdown ⇄ HTML
 
 その名の通り。
