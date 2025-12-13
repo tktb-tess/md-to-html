@@ -2,7 +2,8 @@ name: Deploy to Github Pages
 
 on:
   push:
-    tags: v*
+    branches:
+      - main
 
   workflow_dispatch:
 
