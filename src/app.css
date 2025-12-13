@@ -32,7 +32,7 @@
   }
 
   :where(main) {
-    @apply prose dark:prose-invert prose-slate w-full max-w-320 mx-auto px-4;
+    @apply prose dark:prose-invert prose-slate w-full max-w-7xl mx-auto px-4;
   }
 
   textarea,
@@ -44,7 +44,7 @@
 
   textarea {
     resize: none;
-    @apply block w-full border border-slate-400 bg-white rounded h-[20rem] p-1;
+    @apply block w-full border border-slate-400 bg-white rounded h-80 p-1;
   }
 
   button {

@@ -26,14 +26,14 @@
           class="my-5 btn-theme-1"
           type="button"
           onclick={() => {
-            navigator.clipboard
-              .writeText(parsedHtml)
-              .then(() => {
+            navigator.clipboard.writeText(parsedHtml).then(
+              () => {
                 addToast('successfully copied!', 5000, 'info');
-              })
-              .catch(() => {
+              },
+              () => {
                 addToast('failed to copy', 5000, 'warning');
-              });
+              }
+            );
           }}
         >
           Copy to clipboard

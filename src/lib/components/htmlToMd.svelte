@@ -20,22 +20,20 @@
     <p class="self-center text-xl">↓↓↓</p>
     {#await promise then parsedMarkdown}
       <div class="flex flex-col items-center gap-2">
-        <label for="output-htom" class="text-xl">
-          Parsed Markdown
-        </label>
+        <label for="output-htom" class="text-xl">Parsed Markdown</label>
         <textarea id="output-htom" value={parsedMarkdown} readonly></textarea>
         <button
           class="my-5 btn-theme-1"
           type="button"
           onclick={() => {
-            navigator.clipboard
-              .writeText(parsedMarkdown)
-              .then(() => {
+            navigator.clipboard.writeText(parsedMarkdown).then(
+              () => {
                 addToast('successfully copied!', 5000, 'info');
-              })
-              .catch(() => {
+              },
+              () => {
                 addToast('failed to copy', 5000, 'warning');
-              });
+              }
+            );
           }}
         >
           Copy to clipboard
