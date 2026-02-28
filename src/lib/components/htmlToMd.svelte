@@ -1,9 +1,18 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { addToast } from './global.svelte';
-  import { htmlToMarkdown } from '../modules/between-md-and-html';
+  import { texts } from './global.svelte';
 
-  let htmlText = $state('');
-  const promise = $derived(htmlToMarkdown(htmlText));
+  let htmlToMarkdown: (html: string) => Promise<string> = $state(
+    async () => '',
+  );
+  
+  onMount(async () => {
+    const mod = await import('../modules/htom');
+    htmlToMarkdown = mod.htmlToMarkdown;
+  });
+
+  const promise = $derived(htmlToMarkdown(texts.htomInput));
 
   $effect(() => {
     promise.catch((e) => console.log(e));
@@ -15,7 +24,7 @@
   <div class="flex flex-col gap-3">
     <div class="flex flex-col items-center gap-2">
       <label for="input-htom" class="text-xl">HTML</label>
-      <textarea id="input-htom" bind:value={htmlText}></textarea>
+      <textarea id="input-htom" bind:value={texts.htomInput}></textarea>
     </div>
     <p class="self-center text-xl">↓↓↓</p>
     {#await promise then parsedMarkdown}
@@ -32,7 +41,7 @@
               },
               () => {
                 addToast('failed to copy', 5000, 'warning');
-              }
+              },
             );
           }}
         >

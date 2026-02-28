@@ -1,8 +1,34 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/typography';
 
-@theme inline {
-  --font-sans: 'Inter-Variable', 'Noto Sans JP', sans-serif, system-ui;
+@theme {
+  --font-sans: 'Inter-Variable', 'Arial', 'Noto Sans JP', sans-serif, system-ui;
+
+  --color-body: var(--color-violet-100);
+  --color-d-body: var(--color-violet-950);
+  --color-main: #fff;
+  --color-d-main: oklch(0.15 0.07 295);
+  --color-accent: var(--color-violet-950);
+  --color-d-accent: var(--color-violet-100);
+  --color-text: #000;
+  --color-d-text: #fff;
+  --color-textinv: #fff;
+  --color-d-textinv: #000;
+  --color-border: hsl(0 0 0 / 25%);
+  --color-d-border: hsl(0 0 100 / 30%);
+
+  --default-transition-duration: 80ms;
+  --default-transition-timing-function: cubic-bezier(0.25, 0, 0, 1);
+
+  --default-font-feature-settings:
+    'case', 'cv01', 'cv05', 'cv08', 'cv10', 'cv07', 'ss03';
+  --feature-tnum: var(--default-font-feature-settings), 'tnum';
+
+  --spacing-min-side: 14rem;
+  --spacing-max-main: 72rem;
+  --spacing-paragraph: 0.75rem;
+  --spacing-heading: 2.5rem;
+  --spacing-figure: 2rem;
+  --spacing-gutter: 1rem;
 }
 
 @custom-variant any-hover {
@@ -13,41 +39,192 @@
   }
 }
 
-@utility btn-theme-1 {
-  @apply text-white dark:text-black bg-slate-800 dark:bg-white any-hover:opacity-75 transition-colors rounded px-2;
+@custom-variant hover-focus {
+  @media (any-hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+
+  &:focus-visible {
+    @slot;
+  }
+}
+
+@utility feat-* {
+  font-feature-settings: ---value(--feature-*);
+}
+
+@utility cbg-* {
+  background-color: --value(--color-*);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: --value(--color-d- *);
+  }
+}
+
+@utility ctext-* {
+  color: --value(--color-*);
+
+  @media (prefers-color-scheme: dark) {
+    color: --value(--color-d- *);
+  }
+}
+
+@utility cborder-* {
+  border-color: --value(--color-*);
+
+  @media (prefers-color-scheme: dark) {
+    border-color: --value(--color-d- *);
+  }
+}
+
+@utility cfill-* {
+  fill: --value(--color-*);
+
+  @media (prefers-color-scheme: dark) {
+    fill: --value(--color-d- *);
+  }
 }
 
 @layer base {
-  * {
-    font-optical-sizing: auto;
+  :root {
+    -webkit-tap-highlight-color: revert;
+    line-break: strict;
+    scrollbar-gutter: stable;
+    @apply font-sans max-sm:text-sm wrap-anywhere;
   }
 
-  html,
-  :host {
-    -webkit-tap-highlight-color: revert;
+  * {
+    word-break: normal;
+  }
+
+  @supports (word-break: auto-phrase) {
+    :lang(ja) {
+      word-break: auto-phrase;
+    }
   }
 
   body {
-    @apply bg-slate-50 dark:bg-slate-950;
+    @apply flow-root;
   }
 
-  :where(main) {
-    @apply prose dark:prose-invert prose-slate w-full max-w-7xl mx-auto px-4;
+  .__container {
+    @apply cbg-body ctext-text max-lg:flow-root lg:grid;
+    grid-template-areas:
+      'h h h'
+      '. m .';
+    grid-template-columns:
+      minmax(min(var(--spacing-min-side), 50%), 1fr)
+      minmax(0, var(--spacing-max-main))
+      minmax(min(var(--spacing-min-side), 50%), 1fr);
+    grid-template-rows: auto 1fr;
+  }
+
+  header {
+    grid-area: h;
+    @apply flow-root cbg-main;
+  }
+
+  main {
+    grid-area: m;
+    @apply flow-root cbg-main px-gutter min-h-lvh;
+  }
+
+  h1 {
+    @apply text-4xl font-extralight;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  h5,
+  h6 {
+    @apply text-base;
+  }
+
+  h2,
+  h3,
+  h4 {
+    @apply font-normal;
+  }
+
+  h5,
+  h6,
+  b,
+  strong,
+  th {
+    @apply font-semibold;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mt-heading;
+  }
+
+  :not(li) > :where(p, ul, ol, pre) {
+    @apply my-paragraph;
+  }
+
+  :not(li, ul, ol) > :where(ul, ol) {
+    @apply ps-7;
+  }
+
+  :is(li, ul, ol) > :where(ul, ol) {
+    @apply ps-4;
   }
 
   textarea,
   pre,
   code,
-  input[type='text'] {
+  input:where(
+    :not([type]),
+    [type='text'],
+    [type='number'],
+    [type='url'],
+    [type='email'],
+    [type='search'],
+    [type='tel']
+  ) {
     @apply font-mono;
+  }
+
+  textarea,
+  input:where(
+    :not([type]),
+    [type='text'],
+    [type='number'],
+    [type='url'],
+    [type='email'],
+    [type='search'],
+    [type='tel']
+  ) {
+    @apply cborder-border rounded p-1;
   }
 
   textarea {
     resize: none;
-    @apply block w-full border border-slate-400 bg-white rounded h-80 p-1;
   }
 
   button {
     @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .g__btn-theme-1 {
+    @apply ctext-textinv cbg-accent hover-focus:opacity-60 transition-opacity rounded px-2;
   }
 }

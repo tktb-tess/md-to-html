@@ -1,9 +1,15 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import twcss from '@tailwindcss/vite';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [svelte(), twcss()],
+  plugins: [svelte(), tailwindcss()],
   base: '/md-to-html/',
+  server: {
+    port: 8000,
+  },
+  preview: {
+    port: 8000,
+  },
 });
