@@ -229,7 +229,7 @@
   }
 
   textarea {
-    @apply h-24;
+    @apply h-60;
   }
 
   button {
