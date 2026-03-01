@@ -18,6 +18,7 @@
 
   --default-transition-duration: 80ms;
   --default-transition-timing-function: cubic-bezier(0.25, 0, 0, 1);
+  --ease-in-out-1: cubic-bezier(0.25, 0, 0, 1);
 
   --default-font-feature-settings:
     'case', 'cv01', 'cv05', 'cv08', 'cv10', 'cv07', 'ss03';
@@ -29,6 +30,19 @@
   --spacing-heading: 2.5rem;
   --spacing-figure: 2rem;
   --spacing-gutter: 1rem;
+
+  @keyframes --k-toast {
+    from {
+      opacity: 0;
+      top: -10px;
+    }
+    to {
+      opacity: 1;
+      top: 0;
+    }
+  }
+
+  --animate-toast: --k-toast 300ms var(--ease-in-out-1);
 }
 
 @custom-variant any-hover {
@@ -106,11 +120,11 @@
   }
 
   body {
-    @apply flow-root;
+    @apply flow-root cbg-body ctext-text;
   }
 
   .__container {
-    @apply cbg-body ctext-text max-lg:flow-root lg:grid;
+    @apply max-lg:flow-root lg:grid;
     grid-template-areas:
       'h h h'
       '. m .';
@@ -174,6 +188,13 @@
     @apply mt-heading;
   }
 
+  pre,
+  p,
+  ul,
+  ol {
+    @apply mt-paragraph;
+  }
+
   :not(li) > :where(p, ul, ol, pre) {
     @apply my-paragraph;
   }
@@ -211,11 +232,11 @@
     [type='search'],
     [type='tel']
   ) {
-    @apply cborder-border rounded p-1;
+    @apply border cborder-border rounded p-1;
   }
 
   textarea {
-    resize: none;
+    @apply h-24;
   }
 
   button {

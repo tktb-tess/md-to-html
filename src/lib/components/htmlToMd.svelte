@@ -3,53 +3,67 @@
   import { addToast } from './global.svelte';
   import { texts } from './global.svelte';
 
-  let htmlToMarkdown: (html: string) => Promise<string> = $state(
-    async () => '',
-  );
-  
+  let htmlToMarkdown: ((html: string) => Promise<string>) | undefined =
+    $state();
+
+  const promise = $derived(htmlToMarkdown?.(texts.htomInput));
+  const name = 'md-to-html';
+
   onMount(async () => {
     const mod = await import('../modules/htom');
     htmlToMarkdown = mod.htmlToMarkdown;
   });
 
-  const promise = $derived(htmlToMarkdown(texts.htomInput));
-
   $effect(() => {
-    promise.catch((e) => console.log(e));
+    promise?.catch((e) => console.log(e));
   });
 </script>
 
-<section aria-labelledby="html-to-md">
-  <h2 id="html-to-md" class="text-center my-12 text-3xl">–HTML to Markdown–</h2>
-  <div class="flex flex-col gap-3">
-    <div class="flex flex-col items-center gap-2">
-      <label for="input-htom" class="text-xl">HTML</label>
-      <textarea id="input-htom" bind:value={texts.htomInput}></textarea>
-    </div>
-    <p class="self-center text-xl">↓↓↓</p>
-    {#await promise then parsedMarkdown}
-      <div class="flex flex-col items-center gap-2">
-        <label for="output-htom" class="text-xl">Parsed Markdown</label>
-        <textarea id="output-htom" value={parsedMarkdown} readonly></textarea>
-        <button
-          class="my-5 btn-theme-1"
-          type="button"
-          onclick={() => {
-            navigator.clipboard.writeText(parsedMarkdown).then(
-              () => {
-                addToast('successfully copied!', 5000, 'info');
-              },
-              () => {
-                addToast('failed to copy', 5000, 'warning');
-              },
-            );
-          }}
-        >
-          Copy to clipboard
-        </button>
-      </div>
+<section aria-labelledby={name}>
+  <h2 id={name}>HTML → Markdown</h2>
+  <label class="__area-1" for="{name}-input">
+    <span>HTML</span>
+    <textarea id="{name}-input" bind:value={texts.htomInput}></textarea>
+  </label>
+  <p>↓↓↓</p>
+  {#if promise}
+    {#await promise then parsedHtml}
+      <label class="__area-1" for="{name}-parsed">
+        <span>Parsed Markdown</span>
+        <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
+      </label>
+
+      <button
+        class="g__btn-theme-1 __copy-btn"
+        onclick={(ev) => {
+          ev.preventDefault();
+          navigator.clipboard.writeText(parsedHtml).then(
+            () => addToast('Successfully copied!', 5000, 'info'),
+            () => addToast('Failed to copy', 5000, 'warning'),
+          );
+        }}
+      >
+        Copy to clipboard
+      </button>
     {:catch}
-      <p class="text-center">error</p>
+      <p>error</p>
     {/await}
-  </div>
+  {/if}
 </section>
+
+<style lang="postcss">
+  @reference '../../app.css';
+  @layer components {
+    section {
+      @apply text-center;
+    }
+
+    .__area-1 {
+      @apply flex flex-col gap-1 w-full;
+    }
+
+    .__copy-btn {
+      @apply my-figure;
+    }
+  }
+</style>

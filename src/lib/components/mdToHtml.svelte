@@ -3,62 +3,68 @@
   import { addToast } from './global.svelte';
   import { texts } from './global.svelte';
 
+  let markdownToHtml: ((markdown: string) => Promise<string>) | undefined =
+    $state();
+
+  const promise = $derived(markdownToHtml?.(texts.mtohInput));
+  const name = 'md-to-html';
+
   onMount(async () => {
     const mod = await import('../modules/mtoh');
     markdownToHtml = mod.markdownToHtml;
   });
 
-  let markdownToHtml: (markdown: string) => Promise<string> = $state(
-    async () => '',
-  );
-
-  const promise = $derived(markdownToHtml(texts.mtohInput));
-  const name = 'md-to-html';
-
   $effect(() => {
-    promise.catch((e) => console.error(e));
+    promise?.catch((e) => console.error(e));
   });
 </script>
 
 <section aria-labelledby={name}>
-  <h2 id={name}>Markdown to HTML</h2>
+  <h2 id={name}>Markdown → HTML</h2>
   <label class="__area-1" for="{name}-input">
     <span>Markdown</span>
     <textarea id="{name}-input" bind:value={texts.mtohInput}></textarea>
   </label>
   <p>↓↓↓</p>
-  {#await promise then parsedHtml}
-    <label class="__area-1" for="{name}-parsed">
-      <span>Parsed HTML</span>
-      <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
-    </label>
+  {#if promise}
+    {#await promise then parsedHtml}
+      <label class="__area-1" for="{name}-parsed">
+        <span>Parsed HTML</span>
+        <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
+      </label>
 
-    <button
-      class="c__btn-theme-1"
-      type="button"
-      onclick={() => {
-        navigator.clipboard.writeText(parsedHtml).then(
-          () => addToast('Successfully copied!', 5000, 'info'),
-          () => addToast('Failed to copy', 5000, 'warning'),
-        );
-      }}
-    >
-      Copy to clipboard
-    </button>
-  {:catch}
-    <p>error</p>
-  {/await}
+      <button
+        class="g__btn-theme-1 __copy-btn"
+        type="button"
+        onclick={(ev) => {
+          ev.preventDefault();
+          navigator.clipboard.writeText(parsedHtml).then(
+            () => addToast('Successfully copied!', 5000, 'info'),
+            () => addToast('Failed to copy', 5000, 'warning'),
+          );
+        }}
+      >
+        Copy to clipboard
+      </button>
+    {:catch}
+      <p>error</p>
+    {/await}
+  {/if}
 </section>
 
 <style lang="postcss">
   @reference '../../app.css';
   @layer components {
     section {
-      @apply flex flex-col items-center *:max-w-full gap-2 **:m-0 text-center;
+      @apply text-center;
     }
 
     .__area-1 {
-      @apply flex flex-col gap-1;
+      @apply flex flex-col gap-1 w-full mt-paragraph;
+    }
+
+    .__copy-btn {
+      @apply my-figure;
     }
   }
 </style>

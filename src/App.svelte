@@ -8,7 +8,7 @@
   type Mode = 'md-to-html' | 'html-to-md';
   let mode: Mode = $state('md-to-html');
   const title = 'HTML ⇄ Markdown';
-  const subTitle = 'HTML と Markdown を相互に変換';
+  const subTitle = 'HTML と Markdown の変換';
   const key = 'inputs';
 
   const schema = v.object({
@@ -69,7 +69,7 @@
             mode = 'html-to-md';
           }}
         >
-          Markdown ← HTML
+          HTML → Markdown
         </button>
       </div>
     </section>
@@ -89,7 +89,7 @@
     }
 
     main {
-      @apply text-center;
+      @apply text-center pb-36;
     }
 
     .__prev-link {
@@ -97,7 +97,7 @@
     }
 
     .__select-mode .__btns {
-      @apply flex justify-center gap-2 my-paragraph;
+      @apply flex justify-center gap-4 my-paragraph;
     }
   }
 </style>
