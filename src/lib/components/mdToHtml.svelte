@@ -21,10 +21,10 @@
 
 <section aria-labelledby={name}>
   <h2 id={name}>Markdown → HTML</h2>
-  <label class="__area-1" for="{name}-input">
-    <span>Markdown</span>
+  <div class="__area-1">
+    <label for="{name}-input">Markdown</label>
     <textarea id="{name}-input" bind:value={texts.mtohInput}></textarea>
-  </label>
+  </div>
   <button
     class="g__btn-theme-1 __btn"
     onclick={(ev) => {
@@ -32,26 +32,26 @@
       texts.mtohInput = '';
     }}
   >
-    Delete
+    消去
   </button>
   <p>↓↓↓</p>
   {#if promise}
     {#await promise then parsedHtml}
-      <label class="__area-1" for="{name}-parsed">
-        <span>Parsed HTML</span>
+      <div class="__area-1">
+        <label for="{name}-parsed">Parsed HTML</label>
         <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
-      </label>
+      </div>
       <button
         class="g__btn-theme-1 __btn"
         onclick={(ev) => {
           ev.preventDefault();
           navigator.clipboard.writeText(parsedHtml).then(
-            () => addToast('Successfully copied!', 5000, 'info'),
-            () => addToast('Failed to copy', 5000, 'warning'),
+            () => addToast('Successfully copied!', 3000, 'info'),
+            () => addToast('Failed to copy', 3000, 'warning'),
           );
         }}
       >
-        Copy to clipboard
+        クリップボードにコピー
       </button>
     {:catch}
       <p>error</p>

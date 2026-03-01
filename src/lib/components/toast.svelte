@@ -1,31 +1,31 @@
-<svelte:options runes={true} />
 
 <script lang="ts">
-  import { toasts, dismissToast, type ToastType } from './global.svelte';
-
-  const determineColor = (type: ToastType) => {
-    switch (type) {
-      case 'info': {
-        return 'border-sky-500';
-      }
-      case 'warning': {
-        return 'border-red-500';
-      }
-      case 'caution': {
-        return 'border-yellow-500';
-      }
-      case 'ok': {
-        return 'border-green-500';
-      }
-    }
-  };
+  import { toasts, dismissToast } from './global.svelte';
+  const {}: {} = $props();
 </script>
 
 {#if toasts.size > 0}
   <div class="__toast-root">
-    {#each toasts as [key, toast]}
-      <div class="__toast-elem {determineColor(toast.type)}">
-        <p class="m-0 text-xl">{toast.text}</p>
+    {#each toasts as [key, toast] (key)}
+      <div
+        class="__toast-elem {(() => {
+          switch (toast.type) {
+            case 'info': {
+              return 'bg-blue-600';
+            }
+            case 'warning': {
+              return 'bg-red-600';
+            }
+            case 'caution': {
+              return 'bg-yellow-600';
+            }
+            case 'ok': {
+              return 'bg-green-600';
+            }
+          }
+        })()}"
+      >
+        <p>{toast.text}</p>
         <button
           aria-label="通知を閉じる"
           class="__dismiss-btn"
@@ -46,18 +46,23 @@
   @reference '../../app.css';
   @layer components {
     .__toast-root {
-      @apply fixed z-10000 top-5 left-0 right-0 flex flex-col gap-2 items-center *:max-w-full pointer-events-none;
+      @apply fixed z-toast top-5 left-0 right-0 flex flex-col gap-2 items-center *:max-w-full pointer-events-none;
     }
 
     .__toast-elem {
-      @apply flex gap-2 px-2 animate-toast relative pointer-events-auto cbg-main rounded border-2;
+      @apply w-120 grid gap-2 p-4 animate-toast pointer-events-auto cbg-main rounded leading-none border text-white;
+      grid-template-columns: auto 1rem;
+
+      p {
+        @apply m-0;
+      }
     }
 
     .__dismiss-btn {
-      @apply grid place-items-center;
+      @apply grid place-content-center;
 
       > * {
-        @apply col-span-full row-span-full w-4 border-b border-current;
+        @apply col-span-full row-span-full w-4 border-b-2 border-current;
       }
 
       > :first-child {

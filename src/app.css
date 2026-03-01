@@ -15,6 +15,8 @@
   --color-d-textinv: #000;
   --color-border: hsl(0 0 0 / 25%);
   --color-d-border: hsl(0 0 100 / 30%);
+  --color-caution: var(--color-red-600);
+  --color-d-caution: var(--color-yellow-300);
 
   --default-transition-duration: 80ms;
   --default-transition-timing-function: cubic-bezier(0.25, 0, 0, 1);
@@ -34,15 +36,16 @@
   @keyframes --k-toast {
     from {
       opacity: 0;
-      top: -10px;
+      transform: translateY(-15px);
     }
     to {
       opacity: 1;
-      top: 0;
+      transform: translateY(0);
     }
   }
 
   --animate-toast: --k-toast 300ms var(--ease-in-out-1);
+  --z-toast: calc(infinity);
 }
 
 @custom-variant any-hover {
@@ -99,6 +102,10 @@
   @media (prefers-color-scheme: dark) {
     fill: --value(--color-d- *);
   }
+}
+
+@utility z-* {
+  z-index: --value(--z-*);
 }
 
 @layer base {
