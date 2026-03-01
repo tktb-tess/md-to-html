@@ -1,46 +1,77 @@
 <script lang="ts">
-  import { markdownToHtml } from '../modules/between-md-and-html';
+  import { onMount } from 'svelte';
   import { addToast } from './global.svelte';
+  import { texts } from './global.svelte';
 
-  let markdownText = $state('');
-  const promise = $derived(markdownToHtml(markdownText));
+  let markdownToHtml: ((markdown: string) => Promise<string>) | undefined =
+    $state();
+
+  const promise = $derived(markdownToHtml?.(texts.mtohInput));
+  const name = 'md-to-html';
+
+  onMount(async () => {
+    const mod = await import('../modules/mtoh');
+    markdownToHtml = mod.markdownToHtml;
+  });
 
   $effect(() => {
-    promise.catch((e) => console.error(e));
+    promise?.catch((e) => console.error(e));
   });
 </script>
 
-<section aria-labelledby="md-to-html">
-  <h2 id="md-to-html" class="text-center my-12 text-3xl">–Markdown to HTML–</h2>
-  <div class="flex flex-col gap-3">
-    <div class="flex flex-col items-center gap-2">
-      <label for="input-mtoh" class="text-xl">Markdown</label>
-      <textarea id="input-mtoh" bind:value={markdownText}></textarea>
-    </div>
-    <p class="self-center text-xl">↓↓↓</p>
+<section aria-labelledby={name}>
+  <h2 id={name}>Markdown → HTML</h2>
+  <label class="__area-1" for="{name}-input">
+    <span>Markdown</span>
+    <textarea id="{name}-input" bind:value={texts.mtohInput}></textarea>
+  </label>
+  <button
+    class="g__btn-theme-1 __btn"
+    onclick={(ev) => {
+      ev.preventDefault();
+      texts.mtohInput = '';
+    }}
+  >
+    Delete
+  </button>
+  <p>↓↓↓</p>
+  {#if promise}
     {#await promise then parsedHtml}
-      <div class="flex flex-col items-center gap-2">
-        <label for="output-mtoh" class="text-xl">Parsed HTML</label>
-        <textarea id="output-mtoh" value={parsedHtml} readonly></textarea>
-        <button
-          class="my-5 btn-theme-1"
-          type="button"
-          onclick={() => {
-            navigator.clipboard.writeText(parsedHtml).then(
-              () => {
-                addToast('successfully copied!', 5000, 'info');
-              },
-              () => {
-                addToast('failed to copy', 5000, 'warning');
-              }
-            );
-          }}
-        >
-          Copy to clipboard
-        </button>
-      </div>
+      <label class="__area-1" for="{name}-parsed">
+        <span>Parsed HTML</span>
+        <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
+      </label>
+      <button
+        class="g__btn-theme-1 __btn"
+        onclick={(ev) => {
+          ev.preventDefault();
+          navigator.clipboard.writeText(parsedHtml).then(
+            () => addToast('Successfully copied!', 5000, 'info'),
+            () => addToast('Failed to copy', 5000, 'warning'),
+          );
+        }}
+      >
+        Copy to clipboard
+      </button>
     {:catch}
-      <p class="text-center">error</p>
+      <p>error</p>
     {/await}
-  </div>
+  {/if}
 </section>
+
+<style lang="postcss">
+  @reference '../../app.css';
+  @layer components {
+    section {
+      @apply text-center;
+    }
+
+    .__area-1 {
+      @apply flex flex-col gap-1 w-full mt-paragraph;
+    }
+
+    .__btn {
+      @apply mt-paragraph;
+    }
+  }
+</style>

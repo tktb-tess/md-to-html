@@ -8,10 +8,11 @@ type Toast = {
   timeoutID: number;
 };
 
-export const toasts = new SvelteMap<number, Toast>();
+type Key = { readonly __proto__: null };
+export const toasts = new SvelteMap<Key, Toast>();
 
 export const addToast = (text: string, duration: number, type: ToastType) => {
-  const id = Date.now();
+  const id = { __proto__: null } satisfies Key;
 
   const timeoutID = setTimeout(() => {
     dismissToast(id);
@@ -20,9 +21,14 @@ export const addToast = (text: string, duration: number, type: ToastType) => {
   toasts.set(id, { text, duration, timeoutID, type });
 };
 
-export const dismissToast = (id: number) => {
+export const dismissToast = (id: Key) => {
   const t = toasts.get(id);
   if (!t) return;
   clearTimeout(t.timeoutID);
   toasts.delete(id);
 };
+
+export const texts = $state({
+  mtohInput: '',
+  htomInput: '',
+});
