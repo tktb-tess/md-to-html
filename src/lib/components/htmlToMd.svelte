@@ -32,7 +32,6 @@
         <span>Parsed Markdown</span>
         <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
       </label>
-
       <button
         class="g__btn-theme-1 __copy-btn"
         onclick={(ev) => {
@@ -59,7 +58,7 @@
     }
 
     .__area-1 {
-      @apply flex flex-col gap-1 w-full;
+      @apply flex flex-col gap-1 w-full mt-paragraph;
     }
 
     .__copy-btn {

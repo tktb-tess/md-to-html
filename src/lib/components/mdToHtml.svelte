@@ -32,10 +32,8 @@
         <span>Parsed HTML</span>
         <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
       </label>
-
       <button
         class="g__btn-theme-1 __copy-btn"
-        type="button"
         onclick={(ev) => {
           ev.preventDefault();
           navigator.clipboard.writeText(parsedHtml).then(
