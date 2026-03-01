@@ -137,7 +137,7 @@
 
   header {
     grid-area: h;
-    @apply flow-root cbg-main;
+    @apply flow-root;
   }
 
   main {
@@ -188,15 +188,8 @@
     @apply mt-heading;
   }
 
-  pre,
-  p,
-  ul,
-  ol {
-    @apply mt-paragraph;
-  }
-
   :not(li) > :where(p, ul, ol, pre) {
-    @apply my-paragraph;
+    @apply mt-paragraph;
   }
 
   :not(li, ul, ol) > :where(ul, ol) {

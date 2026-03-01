@@ -85,7 +85,7 @@
   @reference './app.css';
   @layer components {
     .__title {
-      @apply flex flex-col gap-2 my-heading items-center *:max-w-full;
+      @apply flex flex-col gap-2 my-heading items-center *:max-w-full *:m-0 text-balance;
     }
 
     main {
@@ -93,11 +93,11 @@
     }
 
     .__prev-link {
-      @apply flex justify-center;
+      @apply flex justify-center mt-paragraph;
     }
 
     .__select-mode .__btns {
-      @apply flex justify-center gap-4 my-paragraph;
+      @apply flex justify-center gap-4 mt-paragraph flex-wrap;
     }
   }
 </style>

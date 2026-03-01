@@ -25,6 +25,15 @@
     <span>HTML</span>
     <textarea id="{name}-input" bind:value={texts.htomInput}></textarea>
   </label>
+  <button
+    class="g__btn-theme-1 __btn"
+    onclick={(ev) => {
+      ev.preventDefault();
+      texts.htomInput = '';
+    }}
+  >
+    Delete
+  </button>
   <p>↓↓↓</p>
   {#if promise}
     {#await promise then parsedHtml}
@@ -33,7 +42,7 @@
         <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
       </label>
       <button
-        class="g__btn-theme-1 __copy-btn"
+        class="g__btn-theme-1 __btn"
         onclick={(ev) => {
           ev.preventDefault();
           navigator.clipboard.writeText(parsedHtml).then(
@@ -61,8 +70,8 @@
       @apply flex flex-col gap-1 w-full mt-paragraph;
     }
 
-    .__copy-btn {
-      @apply my-figure;
+    .__btn {
+      @apply mt-paragraph;
     }
   }
 </style>
