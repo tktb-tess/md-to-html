@@ -53,28 +53,40 @@
       <a href="/" class="btn-theme-1">戻る</a>
     </div>
     <section class="__select-mode" aria-labelledby="select-a-mode">
-      <h2 id="select-a-mode">Select a mode</h2>
+      <h2 id="select-a-mode" class="text-xl">Select a mode</h2>
       <div class="__btns">
-        <button
-          class="btn-theme-1"
-          data-selected={(mode === 'md-to-html') || null}
-          onclick={(ev) => {
-            ev.preventDefault();
-            mode = 'md-to-html';
-          }}
-        >
-          Markdown → HTML
-        </button>
-        <button
-          class="btn-theme-1"
-          data-selected={(mode === 'html-to-md') || null}
-          onclick={(ev) => {
-            ev.preventDefault();
-            mode = 'html-to-md';
-          }}
-        >
-          HTML → Markdown
-        </button>
+        <div class="btn-item">
+          <input
+            id="mode-mtoh"
+            type="radio"
+            name="mode"
+            checked={mode === 'md-to-html'}
+            onclick={() => (mode = 'md-to-html')}
+          />
+          <label
+            class="btn-theme-1"
+            for="mode-mtoh"
+            data-selected={mode === 'md-to-html' || null}
+          >
+            Markdown → HTML
+          </label>
+        </div>
+        <div class="btn-item">
+          <input
+            id="mode-htom"
+            type="radio"
+            name="mode"
+            checked={mode === 'html-to-md'}
+            onclick={() => (mode = 'html-to-md')}
+          />
+          <label
+            class="btn-theme-1"
+            for="mode-htom"
+            data-selected={mode === 'html-to-md' || null}
+          >
+            HTML → Markdown
+          </label>
+        </div>
       </div>
     </section>
     {#if mode === 'md-to-html'}
@@ -100,8 +112,20 @@
       @apply flex justify-center mt-paragraph;
     }
 
-    .__select-mode .__btns {
+    .__btns {
       @apply flex justify-center gap-4 mt-paragraph flex-wrap;
+
+      .btn-item {
+        @apply grid *:col-span-full *:row-span-full;
+      }
+
+      input {
+        @apply appearance-none rounded-full;
+      }
+
+      label {
+        @apply block cursor-pointer;
+      }
     }
   }
 </style>
