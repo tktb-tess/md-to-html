@@ -26,7 +26,7 @@
     <textarea id="{name}-input" bind:value={texts.htomInput}></textarea>
   </div>
   <button
-    class="g__btn-theme-1 __btn"
+    class="btn-theme-1 __btn"
     onclick={(ev) => {
       ev.preventDefault();
       texts.htomInput = '';
@@ -44,7 +44,7 @@
         <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
       </div>
       <button
-        class="g__btn-theme-1 __btn"
+        class="btn-theme-1 __btn"
         onclick={(ev) => {
           ev.preventDefault();
           navigator.clipboard.writeText(parsedHtml).then(

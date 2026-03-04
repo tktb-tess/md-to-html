@@ -50,13 +50,14 @@
   </header>
   <main>
     <div class="__prev-link">
-      <a href="/" class="g__btn-theme-1">戻る</a>
+      <a href="/" class="btn-theme-1">戻る</a>
     </div>
     <section class="__select-mode" aria-labelledby="select-a-mode">
       <h2 id="select-a-mode">Select a mode</h2>
       <div class="__btns">
         <button
-          class="g__btn-theme-1"
+          class="btn-theme-1"
+          data-selected={(mode === 'md-to-html') || null}
           onclick={(ev) => {
             ev.preventDefault();
             mode = 'md-to-html';
@@ -65,7 +66,8 @@
           Markdown → HTML
         </button>
         <button
-          class="g__btn-theme-1"
+          class="btn-theme-1"
+          data-selected={(mode === 'html-to-md') || null}
           onclick={(ev) => {
             ev.preventDefault();
             mode = 'html-to-md';

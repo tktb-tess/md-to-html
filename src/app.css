@@ -116,12 +116,13 @@
     @apply font-sans max-sm:text-sm wrap-anywhere;
   }
 
-  * {
+  :root,
+  [lang] {
     word-break: normal;
   }
 
   @supports (word-break: auto-phrase) {
-    :lang(ja) {
+    [lang^='ja'] {
       word-break: auto-phrase;
     }
   }
@@ -245,7 +246,12 @@
 }
 
 @layer components {
-  .g__btn-theme-1 {
-    @apply ctext-textinv cbg-accent hover-focus:opacity-60 transition-opacity rounded px-2;
+  .btn-theme-1 {
+    @apply ctext-accent hover-focus:bg-black/10 dark:hover-focus:bg-white/10
+    transition-colors rounded-full px-6 py-1 border-2 cborder-accent;
+  }
+
+  .btn-theme-1[data-selected] {
+    @apply cbg-accent ctext-textinv;
   }
 }
