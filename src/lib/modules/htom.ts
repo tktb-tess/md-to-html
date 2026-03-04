@@ -5,8 +5,8 @@ import rehypeRemark from 'rehype-remark';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 
-export const htmlToMarkdown = async (html: string) => {
-  const v = await unified()
+export const htmlToMd = async (html: string) => {
+  const p = unified()
     .use(rehypeParse, { fragment: true })
     .use(rehypeSanitize)
     .use(rehypeRemark)
@@ -15,7 +15,8 @@ export const htmlToMarkdown = async (html: string) => {
       bullet: '-',
       bulletOther: '+',
       rule: '-',
-    })
-    .process(html);
+    });
+
+  const v = await p.process(html);
   return v.toString();
 };

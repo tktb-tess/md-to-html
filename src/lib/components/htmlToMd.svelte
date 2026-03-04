@@ -11,7 +11,7 @@
 
   onMount(async () => {
     const mod = await import('../modules/htom');
-    htmlToMarkdown = mod.htmlToMarkdown;
+    htmlToMarkdown = mod.htmlToMd;
   });
 
   $effect(() => {

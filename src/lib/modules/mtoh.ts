@@ -5,13 +5,14 @@ import remarkRehype from 'remark-rehype';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 
-export const markdownToHtml = async (markdown: string) => {
-  const v = await unified()
+export const mdToHtml = async (md: string) => {
+  const p = unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSanitize)
-    .use(rehypeStringify)
-    .process(markdown);
+    .use(rehypeStringify);
+
+  const v = await p.process(md);
   return v.toString();
 };

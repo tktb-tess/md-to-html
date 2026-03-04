@@ -11,7 +11,7 @@
 
   onMount(async () => {
     const mod = await import('../modules/mtoh');
-    markdownToHtml = mod.markdownToHtml;
+    markdownToHtml = mod.mdToHtml;
   });
 
   $effect(() => {
