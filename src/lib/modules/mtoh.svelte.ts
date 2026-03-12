@@ -5,14 +5,15 @@ import remarkRehype from 'remark-rehype';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 
-export const mdToHtml = async (md: string) => {
+export const createMtoHProcessor = () => {
   const p = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeSanitize)
     .use(rehypeStringify);
 
-  const v = await p.process(md);
-  return v.toString();
+  return p;
 };
+
+export type Processor = ReturnType<typeof createMtoHProcessor>;

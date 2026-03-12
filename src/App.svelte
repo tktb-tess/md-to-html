@@ -2,38 +2,11 @@
   import Toast from './lib/components/toast.svelte';
   import MdToHtml from './lib/components/mdToHtml.svelte';
   import HtmlToMd from './lib/components/htmlToMd.svelte';
-  import { texts } from './lib/components/global.svelte';
-  import * as v from 'valibot';
-  import { onMount } from 'svelte';
+
   type Mode = 'md-to-html' | 'html-to-md';
   const title = 'HTML ⇄ Markdown';
   const subTitle = 'HTML と Markdown の変換';
-  const key = 'inputs';
   let mode: Mode = $state('md-to-html');
-
-  const schema = v.pipe(
-    v.object({
-      mtohInput: v.string(),
-      htomInput: v.string(),
-    }),
-    v.readonly(),
-  );
-
-  onMount(() => {
-    const val = window.localStorage.getItem(key);
-    if (!val) return;
-    try {
-      const res = v.parse(schema, JSON.parse(val));
-      texts.htomInput = res.htomInput;
-      texts.mtohInput = res.mtohInput;
-    } catch (e) {
-      console.error(e);
-    }
-  });
-
-  $effect(() => {
-    window.localStorage.setItem('inputs', JSON.stringify(texts));
-  });
 </script>
 
 <svelte:head>
@@ -54,7 +27,7 @@
     </div>
     <section class="__select-mode" aria-labelledby="select-a-mode">
       <h2 id="select-a-mode" class="text-xl">Select a mode</h2>
-      <div class="__btns">
+      <div class="btn-group">
         <div class="btn-item">
           <input
             id="mode-mtoh"
@@ -112,19 +85,27 @@
       @apply flex justify-center mt-paragraph;
     }
 
-    .__btns {
+    .btn-group {
       @apply flex justify-center gap-4 mt-paragraph flex-wrap;
 
       .btn-item {
-        @apply grid *:col-span-full *:row-span-full;
-      }
+        @apply block;
 
-      input {
-        @apply appearance-none rounded-full;
-      }
+        > input {
+          @apply appearance-none sr-only;
+        }
 
-      label {
-        @apply block cursor-pointer;
+        > label {
+          @apply block cursor-pointer;
+        }
+
+        > input:checked + label {
+          @apply cbg-accent ctext-textinv;
+        }
+
+        > input:focus-visible + label {
+          @apply outline outline-[CanvasText];
+        }
       }
     }
   }

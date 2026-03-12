@@ -1,21 +1,43 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { addToast } from './global.svelte';
-  import { texts } from './global.svelte';
+  import type { Processor } from '../modules/htom.svelte';
+  import { onMount } from 'svelte';
 
-  let htmlToMarkdown: ((html: string) => Promise<string>) | undefined =
-    $state();
+  let input = $state('');
+  let output = $state('');
+  const name = 'html-to-md';
+  const key = 'mtoh_input';
+  let processor: Processor | null = null;
+  let timeoutID: number | null = null;
 
-  const promise = $derived(htmlToMarkdown?.(texts.htomInput));
-  const name = 'md-to-html';
+  const setProcessor = async () => {
+    const { createHtoMProcessor } = await import('../modules/htom.svelte');
+    return createHtoMProcessor();
+  };
 
-  onMount(async () => {
-    const mod = await import('../modules/htom');
-    htmlToMarkdown = mod.htmlToMarkdown;
-  });
+  const convert = async () => {
+    if (!processor) {
+      processor = await setProcessor();
+    }
+    const v = await processor.process(input);
+    output = v.toString();
+    timeoutID = null;
+  };
 
-  $effect(() => {
-    promise?.catch((e) => console.log(e));
+  onMount(() => {
+    const v = localStorage.getItem(key);
+    if (v != null) {
+      input = v;
+    }
+
+    timeoutID = setTimeout(convert, 500);
+
+    return () => {
+      if (timeoutID != null) {
+        clearTimeout(timeoutID);
+        timeoutID = null;
+      }
+    };
   });
 </script>
 
@@ -23,42 +45,69 @@
   <h2 id={name}>HTML → Markdown</h2>
   <div class="__area-1">
     <label for="{name}-input">HTML</label>
-    <textarea id="{name}-input" bind:value={texts.htomInput}></textarea>
+    <textarea
+      id="{name}-input"
+      bind:value={
+        () => input,
+        (v) => {
+          input = v;
+
+          if (timeoutID != null) {
+            clearTimeout(timeoutID);
+            timeoutID = null;
+          }
+
+          timeoutID = setTimeout(async () => {
+            if (input) {
+              localStorage.setItem(key, input);
+            } else {
+              localStorage.removeItem(key);
+            }
+            await convert();
+          }, 500);
+        }
+      }
+    ></textarea>
   </div>
   <button
     class="btn-theme-1 __btn"
     onclick={(ev) => {
       ev.preventDefault();
-      texts.htomInput = '';
+      input = '';
+
+      if (timeoutID != null) {
+        clearTimeout(timeoutID);
+        timeoutID = null;
+      }
+
+      timeoutID = setTimeout(async () => {
+        localStorage.removeItem(key);
+        await convert();
+      }, 500);
     }}
   >
     消去
   </button>
   <p>↓↓↓</p>
-  {#if promise}
-    {#await promise}
-      <p class="text-xl">Loading…</p>
-    {:then parsedHtml}
-      <div class="__area-1">
-        <label for="{name}-parsed">Parsed Markdown</label>
-        <textarea id="{name}-parsed" value={parsedHtml} readonly></textarea>
-      </div>
-      <button
-        class="btn-theme-1 __btn"
-        onclick={(ev) => {
-          ev.preventDefault();
-          navigator.clipboard.writeText(parsedHtml).then(
-            () => addToast('Successfully copied!', 3000, 'info'),
-            () => addToast('Failed to copy', 3000, 'warning'),
-          );
-        }}
-      >
-        クリップボードにコピー
-      </button>
-    {:catch}
-      <p class="ctext-caution text-xl">Error</p>
-    {/await}
-  {/if}
+  <div class="__area-1">
+    <label for="{name}-parsed">Parsed Markdown</label>
+    <textarea id="{name}-parsed" value={output} readonly></textarea>
+  </div>
+  <button
+    class="btn-theme-1 __btn"
+    onclick={(ev) => {
+      ev.preventDefault();
+      navigator.clipboard.writeText(output).then(
+        () => addToast('Successfully copied!', 3000, 'info'),
+        (e) => {
+          console.error(e);
+          addToast('Failed to copy', 3000, 'warning');
+        },
+      );
+    }}
+  >
+    クリップボードにコピー
+  </button>
 </section>
 
 <style lang="postcss">

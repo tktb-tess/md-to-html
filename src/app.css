@@ -69,7 +69,7 @@
 }
 
 @utility feat-* {
-  font-feature-settings: ---value(--feature-*);
+  font-feature-settings: --value(--feature-*);
 }
 
 @utility cbg-* {
@@ -249,9 +249,5 @@
   .btn-theme-1 {
     @apply ctext-accent hover-focus:bg-accent/15 dark:hover-focus:bg-d-accent/15
     transition-colors rounded-full px-6 py-1 border-2 cborder-accent;
-  }
-
-  .btn-theme-1[data-selected] {
-    @apply cbg-accent ctext-textinv;
   }
 }
