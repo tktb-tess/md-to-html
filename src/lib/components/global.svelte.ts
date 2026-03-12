@@ -27,8 +27,3 @@ export const dismissToast = (id: Key) => {
   clearTimeout(t.timeoutID);
   toasts.delete(id);
 };
-
-export const texts = $state({
-  mtohInput: '',
-  htomInput: '',
-});

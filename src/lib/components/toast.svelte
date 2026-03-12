@@ -1,4 +1,3 @@
-
 <script lang="ts">
   import { toasts, dismissToast } from './global.svelte';
   const {}: {} = $props();
