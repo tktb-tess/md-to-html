@@ -1,27 +1,17 @@
 <script lang="ts">
   import { addToast } from './global.svelte';
-  import type { Processor } from '../modules/htom.svelte';
   import { onMount } from 'svelte';
 
   let input = $state('');
   let output = $state('');
   const name = 'html-to-md';
   const key = 'mtoh_input';
-  let processor: Processor | null = null;
+  const delay = 500;
   let timeoutID: number | null = null;
 
-  const setProcessor = async () => {
-    const { createHtoMProcessor } = await import('../modules/htom.svelte');
-    return createHtoMProcessor();
-  };
-
-  const convert = async () => {
-    if (!processor) {
-      processor = await setProcessor();
-    }
-    const v = await processor.process(input);
-    output = v.toString();
-    timeoutID = null;
+  const getProcessor = async () => {
+    const { getProcessor } = await import('../modules/htom.svelte');
+    return getProcessor();
   };
 
   onMount(() => {
@@ -30,7 +20,14 @@
       input = v;
     }
 
-    timeoutID = setTimeout(convert, 500);
+    if (input) {
+      timeoutID = setTimeout(async () => {
+        const p = await getProcessor();
+        const v = await p.process(input);
+        output = v.toString();
+        timeoutID = null;
+      }, delay);
+    }
 
     return () => {
       if (timeoutID != null) {
@@ -63,8 +60,11 @@
             } else {
               localStorage.removeItem(key);
             }
-            await convert();
-          }, 500);
+            const p = await getProcessor();
+            const v = await p.process(input);
+            output = v.toString();
+            timeoutID = null;
+          }, delay);
         }
       }
     ></textarea>
@@ -82,7 +82,10 @@
 
       timeoutID = setTimeout(async () => {
         localStorage.removeItem(key);
-        await convert();
+        const p = await getProcessor();
+        const v = await p.process(input);
+        output = v.toString();
+        timeoutID = null;
       }, 500);
     }}
   >

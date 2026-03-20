@@ -8,11 +8,11 @@ type Toast = {
   timeoutID: number;
 };
 
-type Key = { readonly __proto__: null };
+type Key = {};
 export const toasts = new SvelteMap<Key, Toast>();
 
 export const addToast = (text: string, duration: number, type: ToastType) => {
-  const id = { __proto__: null } satisfies Key;
+  const id: Key = { __proto__: null };
 
   const timeoutID = setTimeout(() => {
     dismissToast(id);

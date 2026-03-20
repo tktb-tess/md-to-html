@@ -23,7 +23,7 @@
   </header>
   <main>
     <div class="__prev-link">
-      <a href="/" class="btn-theme-1">戻る</a>
+      <a href="/">戻る</a>
     </div>
     <section class="__select-mode" aria-labelledby="select-a-mode">
       <h2 id="select-a-mode" class="text-xl">Select a mode</h2>
@@ -37,7 +37,6 @@
             onclick={() => (mode = 'md-to-html')}
           />
           <label
-            class="btn-theme-1"
             for="mode-mtoh"
             data-selected={mode === 'md-to-html' || null}
           >
@@ -53,7 +52,6 @@
             onclick={() => (mode = 'html-to-md')}
           />
           <label
-            class="btn-theme-1"
             for="mode-htom"
             data-selected={mode === 'html-to-md' || null}
           >
@@ -83,6 +81,10 @@
 
     .__prev-link {
       @apply flex justify-center mt-paragraph;
+
+      > a {
+        @apply btn-theme-1;
+      }
     }
 
     .btn-group {
@@ -96,15 +98,15 @@
         }
 
         > label {
-          @apply block cursor-pointer;
+          @apply block cursor-pointer btn-theme-1;
         }
 
         > input:checked + label {
-          @apply cbg-accent ctext-textinv;
+          @apply cbg-accent text-textinv;
         }
 
         > input:focus-visible + label {
-          @apply outline outline-[CanvasText];
+          @apply outline outline-text;
         }
       }
     }
