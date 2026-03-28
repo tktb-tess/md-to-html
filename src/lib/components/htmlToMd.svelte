@@ -10,8 +10,8 @@
   let timeoutID: number | null = null;
 
   const getProcessor = async () => {
-    const { getProcessor } = await import('../modules/htom.svelte');
-    return getProcessor();
+    const { processor } = await import('../modules/htom');
+    return processor;
   };
 
   onMount(() => {
@@ -70,7 +70,7 @@
     ></textarea>
   </div>
   <button
-    class="btn-theme-1 __btn"
+    class="__btn"
     onclick={(ev) => {
       ev.preventDefault();
       input = '';
@@ -97,7 +97,7 @@
     <textarea id="{name}-parsed" value={output} readonly></textarea>
   </div>
   <button
-    class="btn-theme-1 __btn"
+    class="__btn"
     onclick={(ev) => {
       ev.preventDefault();
       navigator.clipboard.writeText(output).then(
@@ -125,7 +125,7 @@
     }
 
     .__btn {
-      @apply mt-paragraph;
+      @apply mt-paragraph btn-theme-1;
     }
   }
 </style>

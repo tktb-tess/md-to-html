@@ -10,8 +10,8 @@
   let timeoutID: number | null = null;
 
   const getProcessor = async () => {
-    const { getProcessor } = await import('../modules/mtoh.svelte');
-    return getProcessor();
+    const { processor } = await import('../modules/mtoh');
+    return processor;
   };
 
   onMount(() => {
