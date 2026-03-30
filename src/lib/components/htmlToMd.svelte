@@ -121,11 +121,11 @@
     }
 
     .__area-1 {
-      @apply flex flex-col gap-1 w-full mt-paragraph;
+      @apply flex flex-col gap-1 inline-full mbs-paragraph;
     }
 
     .__btn {
-      @apply mt-paragraph btn-theme-1;
+      @apply mbs-paragraph btn-theme-1;
     }
   }
 </style>
