@@ -10,17 +10,18 @@
   --font-sans:
     'Inter-Variable', 'Arial', 'Local-Noto-Sans', sans-serif, system-ui;
 
-  --color-body: var(--color-violet-100);
-  --color-d-body: var(--color-violet-950);
-  --color-main: Canvas;
-  --color-accent: var(--color-violet-950);
-  --color-d-accent: var(--color-violet-100);
-  --color-text: CanvasText;
-  --color-textinv: Canvas;
-  --color-border: hsl(0 0 0 / 25%);
-  --color-d-border: hsl(0 0 100 / 30%);
-  --color-caution: var(--color-red-600);
-  --color-d-caution: var(--color-yellow-300);
+  --color-violet-dark: oklch(from var(--color-violet-950) 20% 0.06 h);
+
+  --color-body: light-dark(var(--color-violet-100), var(--color-violet-950));
+  --color-main: canvas;
+  --color-text: canvasText;
+  --color-textinv: canvas;
+  --color-border: light-dark(hsl(0 0 0 / 25%), hsl(0 0 100 / 25%));
+  --color-border-2: light-dark(hsl(0 0 0 / 40%), hsl(0 0 100 / 40%));
+  --color-link: light-dark(var(--color-blue-700), var(--color-blue-400));
+  --color-link-disabled: light-dark(hsl(0 0 0 / 60%), hsl(0 0 100 / 40%));
+  --color-accent: light-dark(var(--color-violet-950), var(--color-violet-100));
+  --color-caution: light-dark(var(--color-red-600), var(--color-yellow-300));
 
   --default-transition-duration: 80ms;
   --default-transition-timing-function: cubic-bezier(0.25, 0, 0, 1);
@@ -76,45 +77,13 @@
   font-feature-settings: --value(--feature-*);
 }
 
-@utility cbg-* {
-  background-color: --value(--color-*);
-
-  @media (prefers-color-scheme: dark) {
-    background-color: --value(--color-d- *);
-  }
-}
-
-@utility ctext-* {
-  color: --value(--color-*);
-
-  @media (prefers-color-scheme: dark) {
-    color: --value(--color-d- *);
-  }
-}
-
-@utility cborder-* {
-  border-color: --value(--color-*);
-
-  @media (prefers-color-scheme: dark) {
-    border-color: --value(--color-d- *);
-  }
-}
-
-@utility cfill-* {
-  fill: --value(--color-*);
-
-  @media (prefers-color-scheme: dark) {
-    fill: --value(--color-d- *);
-  }
-}
-
 @utility z-* {
   z-index: --value(--z-*);
 }
 
 @utility btn-theme-1 {
-  @apply ctext-accent hover-focus:bg-accent/15 dark:hover-focus:bg-d-accent/15
-    transition-colors rounded-full px-6 py-1 border-2 cborder-accent;
+  @apply text-accent hover-focus:bg-accent/15
+    transition-colors rounded-full px-6 py-1 border-2 border-accent;
 }
 
 @layer base {
@@ -122,10 +91,11 @@
     -webkit-tap-highlight-color: revert;
     line-break: strict;
     scrollbar-gutter: stable;
-    @apply font-sans max-sm:text-sm wrap-anywhere;
+    text-spacing-trim: trim-start;
+    text-autospace: normal;
+    @apply font-sans max-sm:text-sm wrap-anywhere scheme-light-dark;
   }
 
-  :root,
   [lang] {
     word-break: normal;
   }
@@ -133,11 +103,12 @@
   @supports (word-break: auto-phrase) {
     [lang^='ja'] {
       word-break: auto-phrase;
+      text-align: justify;
     }
   }
 
   body {
-    @apply flow-root cbg-body text-text;
+    @apply flow-root bg-body text-text;
   }
 
   .__container {
@@ -159,7 +130,7 @@
 
   main {
     grid-area: m;
-    @apply flow-root bg-main px-gutter min-h-lvh;
+    @apply flow-root bg-main px-gutter min-block-lvh;
   }
 
   h1 {
@@ -202,11 +173,11 @@
   h4,
   h5,
   h6 {
-    @apply mt-heading;
+    @apply mbs-heading;
   }
 
   :not(li) > :where(p, ul, ol, pre) {
-    @apply mt-paragraph;
+    @apply mbs-paragraph;
   }
 
   :not(li, ul, ol) > :where(ul, ol) {
@@ -242,11 +213,11 @@
     [type='search'],
     [type='tel']
   ) {
-    @apply border cborder-border rounded p-1;
+    @apply border border-border rounded p-1;
   }
 
   textarea {
-    @apply h-60;
+    @apply block-60;
   }
 
   button {

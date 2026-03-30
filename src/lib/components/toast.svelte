@@ -46,11 +46,11 @@
   @reference '../../app.css';
   @layer components {
     .__toast-root {
-      @apply fixed z-toast inset-0 flex flex-col gap-2 py-2 items-center *:max-w-full pointer-events-none;
+      @apply fixed z-toast inset-0 flex flex-col gap-2 py-2 items-center *:max-inline-full pointer-events-none;
     }
 
     .__toast-elem {
-      @apply max-w-120 w-[calc(100%-2rem)] grid gap-2 p-4 animate-toast pointer-events-auto cbg-main rounded leading-none border text-white;
+      @apply max-inline-120 inline-[calc(100%-2rem)] grid gap-2 p-4 animate-toast pointer-events-auto bg-main rounded leading-none border text-white;
       grid-template-columns: auto 1rem;
 
       p {
@@ -62,7 +62,7 @@
       @apply grid place-content-center;
 
       > * {
-        @apply col-span-full row-span-full w-4 border-b-2 border-current;
+        @apply col-span-full row-span-full inline-4 border-b-2 border-current;
       }
 
       > :first-child {

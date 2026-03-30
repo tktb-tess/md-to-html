@@ -2,17 +2,16 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="https://tktb-tess.github.io/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light dark" />
     <link
       rel="stylesheet"
       href="https://api.tktb-tess.dev/fonts/Inter/font-face.css"
       crossorigin="anonymous"
     />
+    %sveltekit.head%
   </head>
-  <body>
-    <div id="app" class="contents"></div>
-    <script type="module" src="/src/main.ts"></script>
+  <body data-sveltekit-preload-data="hover">
+    <div class="contents">%sveltekit.body%</div>
   </body>
 </html>
