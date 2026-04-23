@@ -4,10 +4,11 @@
 
   let input = $state('');
   let output = $state('');
+
   const name = 'md-to-html';
   const key = 'htom_input';
   const delay = 500;
-  let timeoutID: number | null = null;
+  let timeoutID: ReturnType<typeof setTimeout> | null = null;
 
   const getProcessor = async () => {
     const { processor } = await import('../modules/mtoh');

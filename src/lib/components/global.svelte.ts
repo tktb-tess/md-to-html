@@ -5,14 +5,14 @@ type Toast = {
   text: string;
   duration: number;
   type: ToastType;
-  timeoutID: number;
+  timeoutID: ReturnType<typeof setTimeout>;
 };
 
 type Key = symbol;
 export const toasts = new SvelteMap<Key, Toast>();
 
 export const addToast = (text: string, duration: number, type: ToastType) => {
-  const id: Key = Symbol('key');
+  const id: Key = Symbol();
 
   const timeoutID = setTimeout(() => {
     dismissToast(id);
