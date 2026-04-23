@@ -35,7 +35,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm i --frozen-lockfile
 
-      - name: Build Astro
+      - name: Build SvelteKit
         run: pnpm run build
 
       - name: Configure GitHub Pages
