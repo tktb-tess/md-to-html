@@ -1,18 +1,28 @@
 import { SvelteMap } from 'svelte/reactivity';
 
 export type ToastType = 'info' | 'warning' | 'caution' | 'ok';
-type Toast = {
+
+interface Toast {
   text: string;
   duration: number;
   type: ToastType;
   timeoutID: ReturnType<typeof setTimeout>;
+}
+
+const count = new Uint32Array(1);
+declare const __BRAND__: unique symbol;
+
+type ID = string & { readonly [__BRAND__]: unknown };
+
+const getId = () => {
+  const s = `${count[0]!++}`;
+  return s as ID;
 };
 
-type Key = symbol;
-export const toasts = new SvelteMap<Key, Toast>();
+export const toasts = new SvelteMap<ID, Toast>();
 
 export const addToast = (text: string, duration: number, type: ToastType) => {
-  const id: Key = Symbol();
+  const id = getId();
 
   const timeoutID = setTimeout(() => {
     dismissToast(id);
@@ -21,7 +31,7 @@ export const addToast = (text: string, duration: number, type: ToastType) => {
   toasts.set(id, { text, duration, timeoutID, type });
 };
 
-export const dismissToast = (id: Key) => {
+export const dismissToast = (id: ID) => {
   const t = toasts.get(id);
   if (!t) return;
   clearTimeout(t.timeoutID);

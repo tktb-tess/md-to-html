@@ -28,7 +28,7 @@
   --ease-in-out-1: cubic-bezier(0.25, 0, 0, 1);
 
   --default-font-feature-settings:
-    'case', 'cv01', 'cv05', 'cv08', 'cv10', 'cv07', 'ss03';
+    'calt', 'cv01', 'cv05', 'cv08', 'cv10', 'cv07', 'ss03';
   --feature-tnum: var(--default-font-feature-settings), 'tnum';
 
   --spacing-min-side: 14rem;

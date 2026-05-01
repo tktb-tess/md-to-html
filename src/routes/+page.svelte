@@ -35,7 +35,9 @@
             type="radio"
             name="mode"
             checked={mode === 'md-to-html'}
-            onclick={() => (mode = 'md-to-html')}
+            onclick={() => {
+              mode = 'md-to-html';
+            }}
           />
           <label for="mode-mtoh">Markdown → HTML</label>
         </div>
@@ -45,7 +47,9 @@
             type="radio"
             name="mode"
             checked={mode === 'html-to-md'}
-            onclick={() => (mode = 'html-to-md')}
+            onclick={() => {
+              mode = 'html-to-md';
+            }}
           />
           <label for="mode-htom">HTML → Markdown</label>
         </div>
