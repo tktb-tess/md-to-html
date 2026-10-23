@@ -13,13 +13,13 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.10",
-    "@sveltejs/kit": "^2.57.1",
-    "@sveltejs/vite-plugin-svelte": "^7.0.0",
-    "@tailwindcss/vite": "^4.2.3",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tailwindcss/vite": "^4.3.3",
     "@tsconfig/svelte": "^5.0.8",
-    "@types/hast": "^3.0.4",
+    "@types/hast": "^3.0.5",
     "@types/mdast": "^4.0.4",
-    "@types/node": "^24.12.2",
+    "@types/node": "^24.19.2",
     "rehype-parse": "^9.0.1",
     "rehype-remark": "^10.0.1",
     "rehype-sanitize": "^6.0.0",
@@ -28,12 +28,16 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-stringify": "^11.0.0",
-    "svelte": "^5.55.4",
-    "svelte-check": "^4.4.6",
-    "tailwindcss": "^4.2.3",
+    "svelte": "^5.57.2",
+    "svelte-check": "^4.7.7",
+    "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "unified": "^11.0.5",
-    "vite": "^8.0.9"
+    "vite": "^8.3.4"
   },
-  "packageManager": "pnpm@10.33.1"
+  "devEngines": {
+    "name": "pnpm",
+    "version": "11.28.6",
+    "onFail": "download"
+  }
 }
