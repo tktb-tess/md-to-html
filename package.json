@@ -36,8 +36,10 @@
     "vite": "^8.3.4"
   },
   "devEngines": {
-    "name": "pnpm",
-    "version": "11.28.6",
-    "onFail": "download"
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.28.6",
+      "onFail": "download"
+    }
   }
 }
