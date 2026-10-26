@@ -16,4 +16,8 @@ export default {
     }
   },
   extensions: ['.svelte'],
+  compilerOptions: {
+    // Force runes mode for the project, except for libraries. Can be removed in svelte 6.
+    runes: (o) => (o.filename.split(/[/\\]/).includes('node_modules') ? undefined : true),
+  }
 };
