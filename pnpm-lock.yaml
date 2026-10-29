@@ -215,7 +215,7 @@ importers:
         specifier: ^11.0.0
         version: 11.0.0
       svelte:
-        specifier: ^5.57.2
+        specifier: ^5.57.3
         version: 5.57.3
       svelte-check:
         specifier: ^4.7.7
